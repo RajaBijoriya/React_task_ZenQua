@@ -15,9 +15,9 @@ const DealList = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [showActive, setShowActive] = useState(false);
-  const [openStages, setOpenStages] = useState({}); // <-- For toggle
+  const [openStages, setOpenStages] = useState({});
 
-  //  Filter logic
+  // Filter Logic
   const filteredDeals = allDeals.filter((d) => {
     const matchesSearch =
       d.client.toLowerCase().includes(search.toLowerCase()) ||
@@ -29,15 +29,13 @@ const DealList = () => {
     return matchesSearch && withinDateRange && matchesActive;
   });
 
-  // Group deals by stage
+  // Group by Stage
   const grouped = filteredDeals.reduce((acc, deal) => {
     if (!acc[deal.stage]) acc[deal.stage] = [];
     acc[deal.stage].push(deal);
     return acc;
   }, {});
 
-
-  //  Toggle open/close 
   const toggleStage = (stage) => {
     setOpenStages((prev) => ({
       ...prev,
@@ -46,53 +44,48 @@ const DealList = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5 sm:p-8 mt-6">
-      {/* Header */}
-
-      {/* Filters */}
-      <div className="flex md:flex-row md:items-center justify-between gap-4 mb-6">
+    <div className="bg-white rounded-2xl shadow-md p-5 sm:p-6 md:p-8 mt-6 w-full max-w-7xl mx-auto">
+      {/* Top Buttons */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div className="flex gap-3 flex-wrap">
-          <button className="px-4 py-2  border-gray-200 border rounded-lg bg-blue-50 text-blue-500 font-medium text-sm">
+          <button className="px-4 py-2 border border-gray-200 rounded-lg bg-blue-50 text-blue-500 font-medium text-sm hover:bg-blue-100 transition">
             My Deals
           </button>
-          <button className="px-4 py-2  border-gray-200 border rounded-lg text-gray-600 text-sm">
+          <button className="px-4 py-2 border border-gray-200 rounded-lg text-gray-600 text-sm hover:bg-gray-100 transition">
             All Clients
           </button>
         </div>
 
-        <div className="bg-blue-300 w-[500px]">
-
-        </div>
-        <div>
-          <button
-            onClick={() => {
-              setFromDate("");
-              setToDate("");
-              setSearch("");
-            }}
-            className="flex items-center hover:text-red-300 text-red-500 text-sm">
-            <IconX size={16} className="mr-1" /> Clear
-          </button>
-        </div>
+        <button
+          onClick={() => {
+            setFromDate("");
+            setToDate("");
+            setSearch("");
+          }}
+          className="flex items-center justify-center hover:text-red-300 text-red-500 text-sm font-medium">
+          <IconX size={16} className="mr-1" /> Clear Filters
+        </button>
       </div>
-      <div className="flex justify-between items-center">
-        <div className=" items-center flex gap-8 mb-6">
-          <h2 className="text-lg flex items-center  font-semibold text-gray-800">
+
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between mb-6 items-start sm:items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3">
+          <h2 className="text-lg flex items-center gap-2 font-semibold text-gray-800">
             <IconFileAnalytics size={18} />
             Pipeline
           </h2>
-          <h2 className="flex items-center">
-            <IconNotes size={18} className="text-blue-500" />
-            <span className="text-blue-500 font-medium">List</span>
+          <h2 className="flex items-center gap-1 text-blue-500 font-medium">
+            <IconNotes size={18} />
+            List
           </h2>
-          <h2>
-            <span className="text-sm text-gray-500 ml-2">
-              Total Deals: {filteredDeals.length}
-            </span>
-          </h2>
+          <span className="text-sm text-gray-500 ml-2">
+            Total Deals: {filteredDeals.length}
+          </span>
         </div>
-        <div className="flex justify-center mb-6 items-center gap-3">
-          <div className="relative">
+
+        {/* Filters */}
+        <div className="flex flex-wrap gap-3 items-center">
+          <div className="relative w-full sm:w-44 md:w-56">
             <IconSearch
               className="absolute left-3 top-2.5 text-gray-400"
               size={18}
@@ -102,41 +95,40 @@ const DealList = () => {
               placeholder="Search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className=" border-gray-200 border pl-9 pr-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-200 pl-9 pr-3 py-2 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
+
           <input
             type="date"
             value={fromDate}
             onChange={(e) => setFromDate(e.target.value)}
-            className=" border-gray-200 border px-3 py-2 rounded-md text-sm"
+            className="border border-gray-200 px-3 py-2 rounded-md text-sm w-full sm:w-auto"
           />
           <input
             type="date"
             value={toDate}
             onChange={(e) => setToDate(e.target.value)}
-            className=" border-gray-200 border px-3 py-2 rounded-md text-sm"
+            className="border border-gray-200 px-3 py-2 rounded-md text-sm w-full sm:w-auto"
           />
+
           <button
             onClick={() => setShowActive(!showActive)}
-            className={`px-4 py-2 flex gap-1 justify-center items-center  border-gray-200 border rounded-lg text-sm font-medium transition-all ${
+            className={`px-4 py-2 flex gap-1 items-center justify-center border border-gray-200 rounded-lg text-sm font-medium transition-all w-full sm:w-auto ${
               showActive
                 ? "bg-green-100 text-green-500 border-green-300"
                 : "text-gray-600 hover:bg-gray-100"
             }`}>
-            <IconArchive
-              className=" left-3 top-2.5 text-gray-600"
-              size={18}
-            />
+            <IconArchive size={18} />
             {showActive ? "Active Deals" : "Show Active"}
           </button>
         </div>
       </div>
 
-      {/* Deals Table */}
+      {/* Deals List */}
       {Object.keys(grouped).length > 0 ? (
         Object.keys(grouped).map((stage, i) => {
-          const isOpen = openStages[stage] ?? true; // Default open
+          const isOpen = openStages[stage] ?? true;
           const colorClasses =
             stage === "Negotiating"
               ? "bg-yellow-50 text-yellow-700"
@@ -149,7 +141,7 @@ const DealList = () => {
           return (
             <div
               key={i}
-              className="mb-6 border-gray-200 border  rounded-xl overflow-hidden">
+              className="mb-6 border border-gray-200 rounded-xl overflow-hidden">
               {/* Stage Header */}
               <div
                 onClick={() => toggleStage(stage)}
@@ -165,20 +157,24 @@ const DealList = () => {
                 <span>{grouped[stage].length} Deals</span>
               </div>
 
-              {/* Deals Rows (collapsible) */}
+              {/* Deals Rows */}
               {isOpen && (
-                <div className="divide-y animate-fadeIn">
+                <div className="divide-y   animate-fadeIn">
                   {grouped[stage].map((deal, index) => (
                     <div
                       key={index}
-                      className="grid grid-cols-2  border-gray-200 border sm:grid-cols-6 items-center px-4 py-3 text-sm hover:bg-blue-50 transition">
-                      <div className="font-medium text-gray-800">
+                      className="grid border border-gray-200 grid-cols-2 sm:grid-cols-6 items-center px-4 py-3 text-sm hover:bg-blue-50 transition">
+                      <div className="font-medium text-gray-800 truncate">
                         {deal.client}
                       </div>
-                      <div className="text-gray-600">{deal.name}</div>
-                      <div className="text-gray-700">{deal.budget}</div>
-                      <div className="text-gray-600">{deal.assignee}</div>
-                      <div>
+                      <div className="text-gray-600 truncate">{deal.name}</div>
+                      <div className="text-gray-700 hidden sm:block">
+                        {deal.budget}
+                      </div>
+                      <div className="text-gray-600 hidden md:block">
+                        {deal.assignee}
+                      </div>
+                      <div className="hidden sm:block">
                         <span
                           className={`px-2 py-1 rounded-full text-xs ${
                             deal.stage === "Negotiating"
@@ -192,7 +188,9 @@ const DealList = () => {
                           {deal.stage}
                         </span>
                       </div>
-                      <div className="text-gray-500">{deal.date}</div>
+                      <div className="text-gray-500 text-xs sm:text-sm text-right">
+                        {deal.date}
+                      </div>
                     </div>
                   ))}
                 </div>
