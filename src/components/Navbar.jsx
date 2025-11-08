@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { IconBell } from "@tabler/icons-react";
+import { IconBell, IconChevronDown } from "@tabler/icons-react";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,7 +21,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <span className="text-2xl font-bold text-blue-600">#</span>
           <h1 className="text-lg font-semibold">
-            ROSTER <span className="text-blue-600" >GRID</span>
+            ROSTER <span className="text-blue-600">GRID</span>
           </h1>
         </div>
 
@@ -31,19 +31,20 @@ const Navbar = () => {
             <a
               key={item}
               href="#"
-              className={`px-4 py-1 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`px-4 py-1 flex justify-center items-center rounded-full text-sm font-medium transition-all duration-200 ${
                 item === "CRM"
                   ? "bg-blue-600 text-white shadow-sm"
                   : "hover:text-blue-600"
               }`}>
               {item}
+              <IconChevronDown size={18} />
             </a>
           ))}
         </nav>
 
         {/* Right Profile */}
         <div className="flex items-center gap-3">
-            <IconBell size={18} />
+          <IconBell size={18} />
           <span className="hidden sm:block font-medium text-gray-700">
             Michael
           </span>

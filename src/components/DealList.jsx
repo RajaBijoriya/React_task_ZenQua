@@ -46,8 +46,9 @@ const DealList = () => {
   return (
     <div className="bg-white rounded-2xl shadow-md p-5 sm:p-6 md:p-8 mt-6 w-full max-w-7xl mx-auto">
       {/* Top Buttons */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div className="flex gap-3 flex-wrap">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 mt-0">
+        {/* Left Buttons */}
+        <div className="flex gap-3 flex-wrap justify-center md:justify-start">
           <button className="px-4 py-2 border border-gray-200 rounded-lg bg-blue-50 text-blue-500 font-medium text-sm hover:bg-blue-100 transition">
             My Deals
           </button>
@@ -56,14 +57,32 @@ const DealList = () => {
           </button>
         </div>
 
+        {/* Middle Avatar Section */}
+        <div
+          className="
+      flex items-center justify-center md:justify-start
+      w-full md:w-[70%] 
+      p-2 md:p-3
+      rounded-full md:rounded-2xl 
+      bg-transparent md:bg-blue-50/50 
+      shadow-none md:shadow-sm
+      transition
+    ">
+          {/* Only Circle on Mobile */}
+          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-500 text-white font-semibold text-sm border-2 border-blue-600">
+            MS
+          </div>
+        </div>
+
+        {/* Right Clear Button */}
         <button
           onClick={() => {
             setFromDate("");
             setToDate("");
             setSearch("");
           }}
-          className="flex items-center justify-center hover:text-red-300 text-red-500 text-sm font-medium">
-          <IconX size={16} className="mr-1" /> Clear Filters
+          className="flex items-center justify-center text-red-500 hover:text-red-400 text-sm font-medium">
+          <IconX size={16} className="mr-1" /> Clear
         </button>
       </div>
 
@@ -139,9 +158,7 @@ const DealList = () => {
               : "bg-gray-50 text-gray-700";
 
           return (
-            <div
-              key={i}
-              className="mb-6 border border-gray-200 rounded-xl overflow-hidden">
+            <div key={i} className="mb-6 rounded-xl overflow-hidden">
               {/* Stage Header */}
               <div
                 onClick={() => toggleStage(stage)}
@@ -159,14 +176,24 @@ const DealList = () => {
 
               {/* Deals Rows */}
               {isOpen && (
-                <div className="divide-y   animate-fadeIn">
+                <div className="divide-y animate-fadeIn">
                   {grouped[stage].map((deal, index) => (
                     <div
                       key={index}
                       className="grid border border-gray-200 grid-cols-2 sm:grid-cols-6 items-center px-4 py-3 text-sm hover:bg-blue-50 transition">
-                      <div className="font-medium text-gray-800 truncate">
-                        {deal.client}
+                      {/* Client Info with Avatar */}
+                      <div className="flex items-center gap-3 font-medium text-gray-800 truncate">
+                        {/* Avatar Circle with Initials */}
+                        <div className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-50 text-blue-600 font-semibold text-xs border border-blue-200">
+                          {deal.client
+                            .split(" ")
+                            .map((word) => word[0]?.toUpperCase())
+                            .slice(0, 2)
+                            .join("")}
+                        </div>
+                        <div className="truncate">{deal.client}</div>
                       </div>
+
                       <div className="text-gray-600 truncate">{deal.name}</div>
                       <div className="text-gray-700 hidden sm:block">
                         {deal.budget}
